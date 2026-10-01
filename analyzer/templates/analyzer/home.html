@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Resume Analyzer</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        /* Navbar */
+
+        .navbar {
+            background: #1e293b;
+            color: white;
+
+            padding: 18px 8%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            font-size: 24px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Dashboard */
+
+        .dashboard {
+            width: 85%;
+            max-width: 1100px;
+
+            margin: 30px auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .dashboard-card {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 14px;
+
+            text-align: center;
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .dashboard-card h3 {
+            color: #64748b;
+
+            font-size: 15px;
+
+            margin-bottom: 10px;
+        }
+
+        .dashboard-card p {
+            color: #2563eb;
+
+            font-size: 32px;
+
+            font-weight: bold;
+        }
+
+        /* Main */
+
+        .container {
+            width: 85%;
+            max-width: 900px;
+
+            margin: 40px auto;
+        }
+
+        .title {
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+        .title h2 {
+            font-size: 32px;
+
+            color: #1e293b;
+
+            margin-bottom: 10px;
+        }
+
+        .title p {
+            color: #64748b;
+        }
+
+        /* Form */
+
+        .form-card {
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+
+            font-weight: bold;
+
+            color: #334155;
+
+            margin-bottom: 8px;
+        }
+
+        .form-group input[type="file"] {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 7px;
+
+            background: #f8fafc;
+        }
+
+        .form-group textarea {
+
+            width: 100%;
+
+            min-height: 180px;
+
+            padding: 14px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 7px;
+
+            resize: vertical;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 14px;
+        }
+
+        .form-group textarea:focus,
+        .form-group input:focus {
+
+            outline: none;
+
+            border-color: #2563eb;
+        }
+
+        .submit-btn {
+
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* Error */
+
+        .error {
+
+            background: #fee2e2;
+
+            color: #991b1b;
+
+            padding: 14px;
+
+            border-radius: 7px;
+
+            margin-bottom: 20px;
+        }
+
+        /* Result */
+
+        .result-card {
+
+            background: white;
+
+            margin-top: 30px;
+
+            padding: 30px;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .result-card h2 {
+
+            color: #1e293b;
+
+            margin-bottom: 20px;
+        }
+
+        .result-info {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 15px;
+
+            margin-bottom: 25px;
+        }
+
+        .info-box {
+
+            background: #f8fafc;
+
+            padding: 15px;
+
+            border-radius: 8px;
+        }
+
+        .info-box strong {
+
+            display: block;
+
+            color: #334155;
+
+            margin-bottom: 5px;
+        }
+
+        .info-box span {
+
+            color: #64748b;
+
+            font-size: 14px;
+        }
+
+        /* Score */
+
+        .score-result {
+
+            text-align: center;
+
+            padding: 25px;
+
+            background: #f8fafc;
+
+            border-radius: 10px;
+
+            margin-bottom: 25px;
+        }
+
+        .score-number {
+
+            font-size: 45px;
+
+            font-weight: bold;
+
+            color: #2563eb;
+
+            margin-bottom: 10px;
+        }
+
+        .score-status {
+
+            display: inline-block;
+
+            padding: 8px 16px;
+
+            border-radius: 20px;
+
+            font-weight: bold;
+
+            font-size: 14px;
+        }
+
+        .excellent {
+
+            background: #dcfce7;
+
+            color: #166534;
+        }
+
+        .good {
+
+            background: #dbeafe;
+
+            color: #1d4ed8;
+        }
+
+        .moderate {
+
+            background: #fef3c7;
+
+            color: #92400e;
+        }
+
+        .low {
+
+            background: #fee2e2;
+
+            color: #991b1b;
+        }
+
+        /* Skills */
+
+        .skills-section {
+
+            margin-top: 20px;
+        }
+
+        .skills-section h3 {
+
+            color: #334155;
+
+            margin-bottom: 10px;
+        }
+
+        .skills-section p {
+
+            color: #64748b;
+
+            line-height: 1.7;
+        }
+
+        /* Result button */
+
+        .details-btn {
+
+            display: inline-block;
+
+            margin-top: 25px;
+
+            padding: 11px 18px;
+
+            background: #2563eb;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 7px;
+        }
+
+        .details-btn:hover {
+
+            background: #1d4ed8;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+
+                flex-direction: column;
+
+                gap: 12px;
+
+                padding: 15px 5%;
+            }
+
+            .dashboard {
+
+                width: 92%;
+
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+
+                width: 92%;
+            }
+
+            .result-info {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- Navbar -->
+
+    <nav class="navbar">
+
+        <h1>
+            Resume Analyzer
+        </h1>
+
+        <div class="nav-links">
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <a href="{% url 'history' %}">
+                History
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Dashboard -->
+
+    <div class="dashboard">
+
+        <div class="dashboard-card">
+
+            <h3>
+                Total Analyses
+            </h3>
+
+            <p>
+                {{ total_analyses }}
+            </p>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <h3>
+                Average Score
+            </h3>
+
+            <p>
+                {{ average_score }}%
+            </p>
+
+        </div>
+
+
+        <div class="dashboard-card">
+
+            <h3>
+                Highest Score
+            </h3>
+
+            <p>
+                {{ highest_score }}%
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Main -->
+
+    <div class="container">
+
+        <div class="title">
+
+            <h2>
+                Resume Analyzer
+            </h2>
+
+            <p>
+                Upload a resume and compare it with a job description.
+            </p>
+
+        </div>
+
+
+        <!-- Error -->
+
+        {% if error %}
+
+            <div class="error">
+
+                {{ error }}
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- Upload Form -->
+
+        <div class="form-card">
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+                {% csrf_token %}
+
+
+                <div class="form-group">
+
+                    <label>
+                        Upload Resume PDF
+                    </label>
+
+                    <input
+                        type="file"
+                        name="resume"
+                        accept=".pdf"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Job Description
+                    </label>
+
+                    <textarea
+                        name="job_description"
+                        placeholder="Paste the job description here..."
+                        required
+                    >{{ job_description }}</textarea>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+                    Analyze Resume
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- Analysis Result -->
+
+        {% if analysis %}
+
+            <div class="result-card">
+
+                <h2>
+                    Analysis Result
+                </h2>
+
+
+                <div class="result-info">
+
+                    <div class="info-box">
+
+                        <strong>
+                            Candidate Name
+                        </strong>
+
+                        <span>
+                            {{ analysis.name|default:"Not detected" }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <strong>
+                            Email
+                        </strong>
+
+                        <span>
+                            {{ analysis.email|default:"Not detected" }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <strong>
+                            Phone
+                        </strong>
+
+                        <span>
+                            {{ analysis.phone|default:"Not detected" }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <strong>
+                            Analysis Date
+                        </strong>
+
+                        <span>
+                            {{ analysis.created_at|date:"d M Y, h:i A" }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Score -->
+
+                <div class="score-result">
+
+                    <div class="score-number">
+
+                        {{ analysis.match_score }}%
+
+                    </div>
+
+
+                    {% if analysis.match_score >= 85 %}
+
+                        <div class="score-status excellent">
+                            Excellent Match
+                        </div>
+
+                    {% elif analysis.match_score >= 75 %}
+
+                        <div class="score-status good">
+                            Good Match
+                        </div>
+
+                    {% elif analysis.match_score >= 60 %}
+
+                        <div class="score-status moderate">
+                            Needs Improvement
+                        </div>
+
+                    {% else %}
+
+                        <div class="score-status low">
+                            Bad Match
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Matched Skills -->
+
+                <div class="skills-section">
+
+                    <h3>
+                        Matched Skills
+                    </h3>
+
+                    <p>
+
+                        {% if analysis.matched_skills %}
+
+                            {{ analysis.matched_skills }}
+
+                        {% else %}
+
+                            No matching skills found.
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+
+                <!-- Missing Skills -->
+
+                <div class="skills-section">
+
+                    <h3>
+                        Missing Skills
+                    </h3>
+
+                    <p>
+
+                        {% if analysis.missing_skills %}
+
+                            {{ analysis.missing_skills }}
+
+                        {% else %}
+
+                            No missing skills.
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="{% url 'analysis_detail' analysis.id %}"
+                    class="details-btn"
+                >
+                    View Full Analysis
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
